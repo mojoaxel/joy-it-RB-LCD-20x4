@@ -1,6 +1,6 @@
 {
 	"name": "joy-it-rb-lcd-20x4",
-	"version": "0.1.0",
+	"version": "0.2.0-beta.0",
 	"description": "Accessing the LCD and input buttons of the RB-LCD-20x4 display by joy-it",
 	"prettier": "@fullstax/prettier-config",
 	"main": "index.js",
