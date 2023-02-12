@@ -7,26 +7,24 @@ Supported are some displays by [joy-it](https://joy-it.net) with a PCF8574/PCF85
 
 1. Plug in the display-shield to your raspberry pi like shown in user manuals.
 2. To access the display you first need to enable the i2c kernel module using `raspi-config`. Have a look in the manual (links below) for details.
-3. install node.js on the raspberry pi e.g. by using the official install script:
-
-```
-	$ curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-	$ sudo apt install nodejs -y
-```
-
+3. install node.js on the raspberry pi e.g. by using the official install script: `curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash - && sudo apt install nodejs -y`
 4. Install this library with `npm install --save joy-it-rb-lcd-20x4`
 5. Run an example script
 
 ## Example
 
 ```js
-const { JoyItLCD } = require('joy-it-rb-lcd-20x4');
+import { JoyItLCD } from 'joy-it-rb-lcd-20x4';
 
-async function main() {
-	cont lcd = new JoyItLCD();
+let lcd;
+
+async function initLCD() {
+	lcd = new JoyItLCD();
 	await lcd.initialize();
-
 	await lcd.clear();
+}
+
+async function sayHello() {
 	await lcd.printLine(0, '********************');
 	await lcd.printLine(1, '******* HELLO ******');
 	await lcd.printLine(2, '******* WORLD ******');
@@ -34,7 +32,8 @@ async function main() {
 }
 
 (async () => {
-	main();
+	await initLCD();
+	await sayHello();
 })();
 ```
 
