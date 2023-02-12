@@ -1,0 +1,12 @@
+{
+	"cSpell.language": "en-US",
+	"cSpell.words": ["raspi", "usleep"],
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"editor.detectIndentation": true,
+	"editor.formatOnSave": true,
+	"editor.insertSpaces": false,
+	"editor.tabSize": 2,
+	"[javascript]": {
+		"editor.formatOnSave": true
+	}
+}
