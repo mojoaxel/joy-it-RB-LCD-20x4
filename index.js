@@ -30,11 +30,15 @@ class JoyItLCD {
 	 */
 	lcd;
 
+	linesCache = [];
+
 	constructor(options = {}) {
 		this.options = {
 			...DEFAULT_OPTIONS,
 			...options,
 		};
+
+		this.linesCache = Array(this.options.height).map(l => ''.padStart(this.options.width));
 
 		this.lcd = new LCD(
 			this.options.bus,
@@ -171,9 +175,25 @@ class JoyItLCD {
 			throw new Error(`Invalid row "${row}". Must be within [0..${this.options.height - 1}]`);
 		}
 		if (text.length > this.options.width) {
-			throw new Error(`Invalid row "${row}". Must be within [0..${this.options.height - 1}]`);
+			throw new Error(`Text too long (${text.length}). Max length is ${this.options.width}`);
 		}
+		this.linesCache[row] = text;
 		return this.lcd.printLine(row, text);
+	}
+
+	async printLines(lines) {
+		if (lines.length > this.options.height) {
+			throw new Error(
+				`Too many lines (${lines.length}).` +
+					`The display only supports ${this.options.height - 1} lines.`
+			);
+		}
+		for (let i = 0; i < lines.length; i++) {
+			// update only lines, that have changed
+			if (this.linesCache[i] !== lines[i]) {
+				await this.printLine(i, lines[i]);
+			}
+		}
 	}
 
 	/**
