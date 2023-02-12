@@ -156,6 +156,25 @@ class JoyItLCD {
 		}
 		return this.lcd.setCursor(col, row);
 	}
+
+	/**
+	 * Prints text to the LCD on the specified line.
+	 *
+	 * @param {number} row The row to position the cursor in. Starting with 0.
+	 * @param {string} text The text to print. Max length is the width of the LCD.
+	 * @returns {Promise<void>}
+	 * @throws {Error} If the row or column are out of bounds.
+	 * @throws {Error} If the text is too long.
+	 */
+	async printLine(row, text) {
+		if (row < 0 || row > this.options.height - 1) {
+			throw new Error(`Invalid row "${row}". Must be within [0..${this.options.height - 1}]`);
+		}
+		if (text.length > this.options.width) {
+			throw new Error(`Invalid row "${row}". Must be within [0..${this.options.height - 1}]`);
+		}
+		return this.lcd.printLine(row, text);
+	}
 }
 
 module.exports = {
