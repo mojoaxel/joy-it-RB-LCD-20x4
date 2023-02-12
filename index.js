@@ -175,6 +175,16 @@ class JoyItLCD {
 		}
 		return this.lcd.printLine(row, text);
 	}
+
+	/**
+	 * Close the connection to the i2c bus.
+	 * This is useful if you want to cleanup eg on closing the app.
+	 *
+	 * @returns {Promise<void>}
+	 */
+	async close() {
+		return this.lcd.close();
+	}
 }
 
 module.exports = {
